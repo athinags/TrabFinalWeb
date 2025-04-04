@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #0a3042;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #022f40;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    color: #00bcd4;
+}
+
+header img.logo {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    width: 100px;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #033649;
+    padding: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 1.2em;
+    transition: color 0.3s;
+}
+
+nav a:hover {
+    color: #00bcd4;
+}
+
+.principal {
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex: 1;
+}
+
+.card {
+    background-color: #033649;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    width: 250px;
+    height: 250px;
+    text-align: start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: baseline;
+    align-items: baseline;
+}
+
+.card img {
+    width: 100%;
+    border-radius: 8px;
+}
+
+.card h3 {
+    margin: 15px 0 10px;
+    font-size: 1.5em;
+    color: #00bcd4;
+}
+
+footer {
+    background-color: #022f40;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1em;
+    color: #fff;
+}

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Árvore Binária</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url("https://ejfoundation.org/imager/media/133762/RS23585_IMGL0400_d3867277feb154defec9b24a5714fadb.jpg") no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            text-align: center;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .arvore-container {
+            position: relative;
+            width: 600px;
+            height: 500px;
+            margin: auto;
+        }
+        .no {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(0, 183, 255, 0.6);
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 183, 255, 0.8);
+        }
+        .numero-box {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+            background-color: rgba(0, 183, 255, 0.7);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 183, 255, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Jogo da Árvore Binária</h1>
+        <div class="d-flex justify-content-center align-items-center gap-3">
+            <div class="numero-box">Número: <span id="numero-atual"></span></div>
+            <button class="numero-box" onclick="gerarNumeroValido()">
+                <img src="images/refazer.png" width="30" height="30"/>
+            </button>
+        </div>
+        <div class="arvore-container" id="arvore"></div>
+    </div>
+
+    <script>
+        let n=0;
+        class NoArvore {
+            constructor(valor = null, x, y, pai = null) {
+                this.valor = valor;
+                this.x = x;
+                this.y = y;
+                this.esquerda = null;
+                this.direita = null;
+                this.pai = pai;
+            }
+        }
+
+        class JogoArvoreBinaria {
+            constructor(container){
+                this.container = container;
+                this.raiz = new NoArvore(null, 300, 20);
+                this.nos = [];
+                this.criarEstruturaArvore(this.raiz, 4, 300, 10, 150);
+                this.gerarNumeroValido();
+            }
+
+            criarEstruturaArvore(no, profundidade, x, y, deslocamento) {
+                if (profundidade === 0) return;
+                this.nos.push(no);
+                this.criarElementoNo(no);
+
+                no.esquerda = new NoArvore(null, x - deslocamento, y + 80, no);
+                no.direita = new NoArvore(null, x + deslocamento, y + 80, no);
+                
+                this.criarEstruturaArvore(no.esquerda, profundidade - 1, x - deslocamento, y + 80, deslocamento / 2);
+                this.criarEstruturaArvore(no.direita, profundidade - 1, x + deslocamento, y + 80, deslocamento / 2);
+            }
+
+            criarElementoNo(no) {
+                const div = document.createElement("div");
+                div.classList.add("no");
+                div.style.left = `${no.x}px`;
+                div.style.top = `${no.y}px`;
+                div.addEventListener("click", () => this.inserirNumero(no, div));
+                this.container.appendChild(div);
+                no.elemento = div;
+            }
+
+            gerarNumeroValido() {
+                let numerosDisponiveis = [...Array(100).keys()].map(i => i + 1);
+                this.numeroAtual = numerosDisponiveis[Math.floor(Math.random() * numerosDisponiveis.length)];
+                document.getElementById("numero-atual").textContent = this.numeroAtual;
+            }
+
+            verificarInsercaoValida(no, valor) {
+                let atual = no.pai;
+                while (atual) {
+                    if ((no === atual.esquerda && valor >= atual.valor) ||
+                        (no === atual.direita && valor <= atual.valor)) {
+                        return false;
+                    }
+                    atual = atual.pai;
+                }
+                return true;
+            }
+
+            inserirNumero(no, div) {
+                if (no.valor !== null) return;
+                if (n==0 && no.pai!=null){
+                    alert("Coloque o primeiro número na raiz!");
+                    return;
+                }else n++;
+                if (!this.verificarInsercaoValida(no, this.numeroAtual)) {
+                    alert("GAME OVER! Número inserido na posição incorreta!");//!!!
+                    location.reload();
+                    return;
+                }
+                
+                no.valor = this.numeroAtual;
+                div.textContent = this.numeroAtual;
+                div.style.backgroundColor = "rgba(0, 150, 255, 0.8)";
+                this.gerarNumeroValido();
+            }
+        }
+
+        const jogo = new JogoArvoreBinaria(document.getElementById("arvore"));
+        function gerarNumeroValido() {
+            jogo.gerarNumeroValido();
+        }
+    </script>
+</body>
+</html>

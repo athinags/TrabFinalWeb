@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutubas Games</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a3042;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #022f40;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+            color: #00bcd4;
+        }
+
+        .game-card {
+            background-color: #033649;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            height: 100%;
+        }
+
+        .game-card img {
+            border-radius: 8px;
+        }
+
+        .game-card h3 {
+            color: #00bcd4;
+            margin-top: 15px;
+        }
+
+        footer {
+            background-color: #022f40;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-gradient-to-bottom from-blue-900 to-blue-700 py-3 shadow-lg">
+        <div class="container">
+            <h1 class="text-center text-white mb-0">
+                <img src="https://cdn-icons-png.flaticon.com/512/47/47015.png" alt="Tubarão" style="height: 40px; vertical-align: middle;">
+                <span class="align-middle ms-2" style="font-family: 'Arial Black', sans-serif; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    Tutubas <span class="text-cyan-300">Games</span>
+                </span>
+            </h1>
+        </div>
+    </header>
+    
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-800 to-cyan-800 shadow-sm">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active px-3 py-2 rounded-pill position-relative" href="paginicial.html">
+                            <i class="fas fa-home me-2"></i>Início
+                            <span class="wave-animation"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagjogos.html">
+                            <i class="fas fa-gamepad me-2"></i>Jogos
+                            <span class="wave-animation"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagsobre.html">
+                            <i class="fas fa-info-circle me-2"></i>Sobre
+                            <span class="wave-animation"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagrank.html">
+                            <i class="fas fa-trophy me-2"></i>Rank
+                            <span class="wave-animation"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <style>
+        /* Efeito de onda animado nos links */
+        .wave-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4fc1e9, transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover .wave-animation {
+            width: 100%;
+        }
+        
+        /* Estilo para o link ativo */
+        .nav-link.active {
+            background: rgba(79, 193, 233, 0.2);
+            font-weight: bold;
+        }
+        
+        .nav-link.active:before {
+            content: "🦈";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* Gradiente personalizado */
+        .bg-gradient-to-bottom {
+            background: linear-gradient(to bottom, var(--tw-gradient-from), var(--tw-gradient-to));
+        }
+        
+        .bg-gradient-to-r {
+            background: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to));
+        }
+        
+        .from-blue-900 { --tw-gradient-from: #1e3a8a; }
+        .to-blue-700 { --tw-gradient-to: #1d4ed8; }
+        .from-blue-800 { --tw-gradient-from: #1e40af; }
+        .to-cyan-800 { --tw-gradient-to: #155e75; }
+        .text-cyan-300 { color: #67e8f9; }
+    </style>
+
+    <div class="container my-5">
+        <main role="main" class="container">
+            <div class="jumbotron p-5 rounded-4 position-relative overflow-hidden" style="
+                background: linear-gradient(rgba(0, 20, 40, 0.85), rgba(0, 40, 80, 0.85)), 
+                            url('images/raposa.jpg') center/cover;
+                color: white;
+                border: 3px solid #4fc1e9;
+                box-shadow: 0 10px 30px rgba(0, 100, 200, 0.3);
+            ">
+                <!-- Efeito de bolhas -->
+                <div class="position-absolute top-0 left-0 w-100 h-100" style="
+                    background: url('https://www.transparenttextures.com/patterns/bubbles.png');
+                    opacity: 0.15;
+                    pointer-events: none;
+                "></div>
+                
+                
+                
+                <h1 class="display-4 fw-bold mb-4" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+                    <i class="fas fa-fish me-2"></i>Aprenda jogando!
+                </h1>
+                <p class="lead fs-4 mb-4" style="max-width: 600px;">
+                    Embarque em uma aventura no fundo do mar enquanto aprende conceitos de Estruturas de Dados e muito mais!
+                </p>
+                <a class="btn btn-lg btn-outline-light border-3 fw-bold px-4" 
+                   href="pagjogos.html" 
+                   role="button"
+                   style="transition: all 0.3s;">
+                    <i class="fas fa-play me-2"></i>Ir para área de jogos »
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <section class="py-3">
+        <div class="container-lg">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="banner-blocks d-flex flex-column flex-md-row gap-3">
+                <!-- Banner Principal (maior) -->
+                <div class="banner-ad flex-grow-1 rounded-3 overflow-hidden" style="background: url('images/martelo.jpg') no-repeat center center; background-size: cover; min-height: 300px;">
+                  <div class="banner-content h-100 d-flex align-items-center p-4 p-lg-5">
+                    <div class="content-wrapper">
+                      <h3 class="banner-title text-white fw-bold mb-2">Árvores Binárias</h3>
+                      <p class="text-white mb-3">Aprenda rápido com tubarões!</p>
+                      <a href="#" class="btn btn-light">Jogue agora</a>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Banners Secundários (em coluna) -->
+                <div class="d-flex flex-column gap-3" style="flex: 0 0 30%; max-width: 30%;">
+                  <!-- Banner 2 -->
+                  <div class="banner-ad rounded-3 overflow-hidden h-100" style="background: url('images/mako.jpg') no-repeat center center; background-size: cover; min-height: 140px;">
+                    <div class="banner-content h-100 d-flex align-items-center p-4">
+                      <div class="content-wrapper">
+                        <h3 class="banner-title text-white fw-bold mb-2">Fila</h3>
+                        <p class="text-white mb-2 small">Ordene corretamente para ganhar pontos!</p>
+                        <a href="#" class="btn btn-sm btn-light">Jogue agora</a>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Banner 3 -->
+                  <div class="banner-ad rounded-3 overflow-hidden h-100" style="background: url('images/tigre2.jpg') no-repeat center center; background-size: cover; min-height: 140px;">
+                    <div class="banner-content h-100 d-flex align-items-center p-4">
+                      <div class="content-wrapper">
+                        <h3 class="banner-title text-white fw-bold mb-2">Algoritmos de Ordenação</h3>
+                        <p class="text-white mb-2 small">Vença seus oponentes!</p>
+                        <a href="#" class="btn btn-sm btn-light">Jogue agora</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section>
+        <div class="container-lg">
+  
+          <div class="bg-secondary text-light py-5 my-5" style="background: linear-gradient(rgba(0, 20, 40, 0.85), rgba(0, 40, 80, 0.85)),url('images/baleia2.jpg') no-repeat center center; background-size: cover;">
+            <div class="container">
+              <div class="row justify-content-center">
+                <div class="col-md-5 p-3">
+                  <div class="section-header">
+                    <h1 class="section-title fw-bold display-5">Cadastre-se já!</h1>
+                  </div>
+                  <p>Faça sua conta para participar do rank e competir contra outros jogadores online.</p>
+                </div>
+                <div class="col-md-5 p-3">
+                  <form>
+                    <div class="mb-3">
+                      <label for="name" class="form-label d-none">Nome</label>
+                      <input type="text" class="form-control form-control-md rounded-0" name="name" id="name" placeholder="Nome">
+                    </div>
+                    <div class="mb-3">
+                      <label for="email" class="form-label d-none">Email</label>
+                      <input type="email" class="form-control form-control-md rounded-0" name="email" id="email" placeholder="Email">
+                    </div>
+                    <div class="d-grid gap-2">
+                      <button type="submit" class="btn btn-dark btn-md rounded-0">Cadastrar</button>
+                    </div>
+                  </form>
+                  
+                </div>
+                
+              </div>
+              
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+
+    <footer>
+        <p>&copy; 2025 Tutubas Games. Todos os direitos reservados.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    </script>
+</body>
+</html>
