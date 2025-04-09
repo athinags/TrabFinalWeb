@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutubas Games</title>
+    <title>Tutubas Games - Ranking</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             background-color: #0a3042;
@@ -49,6 +50,88 @@
             padding: 10px 0;
             margin-top: auto;
         }
+
+        /* Estilos específicos para a página de ranking */
+        .ranking-header {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #00bcd4;
+        }
+
+        .ranking-table {
+            background-color: #033649;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .table {
+            margin-bottom: 0;
+            color: #fff;
+        }
+
+        .table thead {
+            background-color: #022f40;
+            color: #00bcd4;
+        }
+
+        .table tbody tr:nth-child(odd) {
+            background-color: #044a63;
+        }
+
+        .table tbody tr:nth-child(even) {
+            background-color: #033649;
+        }
+
+        .table tbody tr:hover {
+            background-color: #05668d;
+        }
+
+        .rank-1 {
+            background-color: #ffd700 !important;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .rank-2 {
+            background-color: #c0c0c0 !important;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .rank-3 {
+            background-color: #cd7f32 !important;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .medal {
+            width: 25px;
+            height: 25px;
+            margin-right: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+
+        .filter-section {
+            background-color: #033649;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 20px;
+            display: none;
+            color: #ff6b6b;
+        }
     </style>
 </head>
 <body>
@@ -81,13 +164,225 @@
 
     <!-- Conteúdo Principal  -->
     <div class="container my-5">
-        <div class="row">
-            
+        <div class="ranking-header">
+            <h2><i class="fas fa-trophy"></i> Ranking de Jogadores</h2>
+            <p class="lead">Classificação baseada na pontuação total acumulada em todos os jogos</p>
         </div>
+
+        <!-- Filtros -->
+        <div class="filter-section">
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="gameFilter" class="form-label">Filtrar por Jogo:</label>
+                    <select class="form-select" id="gameFilter">
+                        <option value="all">Todos os Jogos</option>
+                        <option value="game1">Jogo 1</option>
+                        <option value="game2">Jogo 2</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="searchPlayer" class="form-label">Buscar Jogador:</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchPlayer" placeholder="Nome do jogador">
+                        <button class="btn btn-primary" type="button" id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabela de Ranking -->
+        <div class="ranking-table">
+            <table class="table table-hover" id="rankingTable">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Jogador</th>
+                        <th scope="col">Pontuação Total</th>
+                        <th scope="col">Jogos Jogados</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingTableBody">
+                    <!-- Dados dos jogadores serão inseridos aqui via JavaScript -->
+                    <tr class="rank-1">
+                        <th scope="row">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2583/2583344.png" alt="Gold Medal" class="medal">1
+                        </th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Avatar" class="avatar">
+                            PlayerOne
+                        </td>
+                        <td>15,820</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="rank-2">
+                        <th scope="row">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2583/2583329.png" alt="Silver Medal" class="medal">2
+                        </th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Avatar" class="avatar">
+                            TutubaGameMaster
+                        </td>
+                        <td>14,750</td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="rank-3">
+                        <th scope="row">
+                            <img src="https://cdn-icons-png.flaticon.com/512/2583/2583319.png" alt="Bronze Medal" class="medal">3
+                        </th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Avatar" class="avatar">
+                            TubaraoProGamerBR
+                        </td>
+                        <td>13,420</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">4</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Avatar" class="avatar">
+                            SharkOfGames
+                        </td>
+                        <td>12,980</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">5</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/12.jpg" alt="Avatar" class="avatar">
+                            NoobMaster69
+                        </td>
+                        <td>11,340</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">6</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/33.jpg" alt="Avatar" class="avatar">
+                            sharkGamer
+                        </td>
+                        <td>10,870</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">7</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/90.jpg" alt="Avatar" class="avatar">
+                            TutubasKing
+                        </td>
+                        <td>9,650</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">8</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="Avatar" class="avatar">
+                            tubarinaGamerGirl
+                        </td>
+                        <td>8,920</td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">9</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Avatar" class="avatar">
+                            tutuba_Player
+                        </td>
+                        <td>7,830</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">10</th>
+                        <td>
+                            <img src="https://randomuser.me/api/portraits/women/55.jpg" alt="Avatar" class="avatar">
+                            Tubaraoteamo
+                        </td>
+                        <td>6,450</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="noResults" class="no-results">
+                <i class="fas fa-exclamation-circle fa-2x"></i>
+                <p>Nenhum jogador encontrado com esse nome.</p>
+            </div>
+        </div>
+
+        <!-- Paginação -->
+        <nav aria-label="Page navigation" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Anterior</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Próxima</a>
+                </li>
+            </ul>
+        </nav>
     </div>
     <footer>
         <p>&copy; 2025 Tutubas Games. Todos os direitos reservados.</p>
     </footer>
+    
+    <!-- jQuery para facilitar as requisições AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+
+    <script>
+        $(document).ready(function() {
+
+            const originalPlayers = $('#rankingTableBody tr').map(function() {
+                return {
+                    element: this,
+                    name: $(this).find('td').first().text().trim().toLowerCase(),
+                    gamesPlayed: parseInt($(this).find('td').last().text())
+                };
+            }).get();
+            
+            function searchPlayers() {
+                const searchTerm = $('#searchPlayer').val().trim().toLowerCase();
+                const gameFilter = $('#gameFilter').val();
+                let hasResults = false;
+
+                $('#rankingTableBody tr').hide();
+                $('#noResults').hide();
+                
+                // Filtra os jogadores
+                originalPlayers.forEach(player => {
+                    const matchesSearch = searchTerm === '' || player.name.includes(searchTerm);
+                    const matchesGameFilter = gameFilter === 'all' || 
+                                           (gameFilter === 'game1' && player.gamesPlayed >= 1) || 
+                                           (gameFilter === 'game2' && player.gamesPlayed >= 1);
+                    
+                    if (matchesSearch && matchesGameFilter) {
+                        $(player.element).show();
+                        hasResults = true;
+                    }
+                });
+                
+                // Mostra mensagem se não houver resultados
+                if (!hasResults) {
+                    $('#noResults').show();
+                }
+            }
+            
+            // Event listeners
+            $('#searchButton').click(searchPlayers);
+            $('#searchPlayer').keyup(function(e) {
+                if (e.key === 'Enter') {
+                    searchPlayers();
+                }
+            });
+            
+            $('#gameFilter').change(searchPlayers);
+            
+            searchPlayers();
+        });
+    </script>
 </body>
 </html>
