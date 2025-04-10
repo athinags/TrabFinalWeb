@@ -6,11 +6,15 @@
     <title>Jogo da Árvore Binária</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        /* html {
+            background: rgb(11, 55, 113);
+        } */
         body {
             background: url("https://ejfoundation.org/imager/media/133762/RS23585_IMGL0400_d3867277feb154defec9b24a5714fadb.jpg") no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            color: rgb(255, 255, 255);
             text-align: center;
+            padding: 0px;
         }
         .container {
             margin-top: 20px;
@@ -35,6 +39,14 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0px 0px 10px rgba(0, 183, 255, 0.8);
+            z-index: 2;
+        }
+        .linha {
+            position: absolute;
+            background-color: white;
+            height: 2px;
+            transform-origin: 0 0;
+            z-index: 1;
         }
         .numero-box {
             font-size: 24px;
@@ -57,11 +69,12 @@
                 <img src="images/refazer.png" width="30" height="30"/>
             </button>
         </div>
+        <br>
         <div class="arvore-container" id="arvore"></div>
     </div>
 
     <script>
-        let n=0;
+        let n=0; 
         class NoArvore {
             constructor(valor = null, x, y, pai = null) {
                 this.valor = valor;
@@ -89,19 +102,48 @@
 
                 no.esquerda = new NoArvore(null, x - deslocamento, y + 80, no);
                 no.direita = new NoArvore(null, x + deslocamento, y + 80, no);
-                
+            
                 this.criarEstruturaArvore(no.esquerda, profundidade - 1, x - deslocamento, y + 80, deslocamento / 2);
                 this.criarEstruturaArvore(no.direita, profundidade - 1, x + deslocamento, y + 80, deslocamento / 2);
+
+                // Adiciona linhas apenas se não for o último nível (profundidade > 1)
+                if (profundidade > 1) {
+                    if (no.esquerda) this.criarLinha(no, no.esquerda);
+                    if (no.direita) this.criarLinha(no, no.direita);
+                }
             }
+
 
             criarElementoNo(no) {
                 const div = document.createElement("div");
                 div.classList.add("no");
-                div.style.left = `${no.x}px`;
-                div.style.top = `${no.y}px`;
+                div.style.left = `${no.x - 25}px`;  // Ajuste para centralizar
+                div.style.top = `${no.y - 25}px`;  // Ajuste para centralizar
                 div.addEventListener("click", () => this.inserirNumero(no, div));
                 this.container.appendChild(div);
                 no.elemento = div;
+            }
+            criarLinha(noPai, noFilho) {
+                const linha = document.createElement("div");
+                linha.classList.add("linha");
+                
+                // Calcula as coordenadas
+                const x1 = noPai.x;
+                const y1 = noPai.y;
+                const x2 = noFilho.x;
+                const y2 = noFilho.y;
+                
+                // Calcula comprimento e ângulo da linha
+                const length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+                const angle = Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI;
+                
+                // Posiciona a linha
+                linha.style.width = `${length}px`;
+                linha.style.left = `${x1}px`;
+                linha.style.top = `${y1}px`;
+                linha.style.transform = `rotate(${angle}deg)`;
+                
+                this.container.appendChild(linha);
             }
 
             gerarNumeroValido() {
@@ -111,33 +153,95 @@
             }
 
             verificarInsercaoValida(no, valor) {
-                let atual = no.pai;
-                while (atual) {
-                    if ((no === atual.esquerda && valor >= atual.valor) ||
-                        (no === atual.direita && valor <= atual.valor)) {
-                        return false;
-                    }
-                    atual = atual.pai;
-                }
-                return true;
+    let atual = no.pai;
+    
+    while (atual) {
+        // Se estamos no lado esquerdo do pai, o valor deve ser MENOR que todos os ancestrais
+        // onde este caminho está no lado DIREITO deles
+        if (no === atual.esquerda && valor >= atual.valor) {
+            return false;
+        }
+        
+        // Se estamos no lado direito do pai, o valor deve ser MAIOR que todos os ancestrais
+        // onde este caminho está no lado ESQUERDO deles
+        if (no === atual.direita && valor <= atual.valor) {
+            return false;
+        }
+        
+        // Verificar ancestrais superiores
+        let ancestor = atual.pai;
+        let child = atual;
+        
+        while (ancestor) {
+            // Se nosso nó atual está no lado direito de um ancestor,
+            // então todos os valores nesta subárvore devem ser > ancestor.valor
+            if (child === ancestor.direita && valor <= ancestor.valor) {
+                return false;
             }
+            
+            // Se nosso nó atual está no lado esquerdo de um ancestor,
+            // então todos os valores nesta subárvore devem ser < ancestor.valor
+            if (child === ancestor.esquerda && valor >= ancestor.valor) {
+                return false;
+            }
+            
+            child = ancestor;
+            ancestor = ancestor.pai;
+        }
+        
+        atual = atual.pai;
+    }
+    
+    return true;
+}
 
             inserirNumero(no, div) {
-                if (no.valor !== null) return;
-                if (n==0 && no.pai!=null){
-                    alert("Coloque o primeiro número na raiz!");
+                // Verifica se o nó já tem valor
+                if (no.valor !== null) {
+                    alert("Este nó já possui um valor!");
                     return;
-                }else n++;
+                }
+                
+                // Verifica se é a primeira inserção (deve ser na raiz)
+                if (n === 0 && no !== this.raiz) {
+                    alert("Você deve começar inserindo o primeiro número na raiz!");
+                    return;
+                }
+                
+                // Verifica se o jogador está tentando inserir em um nó filho antes do pai
+                if (no.pai && no.pai.valor === null) {
+                    alert("Você deve preencher o nó pai primeiro!");
+                    return;
+                }
+                
+                // Verifica se a inserção segue as regras da árvore binária de busca
                 if (!this.verificarInsercaoValida(no, this.numeroAtual)) {
-                    alert("GAME OVER! Número inserido na posição incorreta!");//!!!
+                    alert("GAME OVER! Número inserido na posição incorreta!");
                     location.reload();
                     return;
                 }
                 
+                // Se passou todas as verificações, insere o número
                 no.valor = this.numeroAtual;
                 div.textContent = this.numeroAtual;
                 div.style.backgroundColor = "rgba(0, 150, 255, 0.8)";
+                n++;
                 this.gerarNumeroValido();
+                
+                // Verifica se a árvore está completa
+                if (this.verificarArvoreCompleta()) {
+                    alert("Parabéns! Você completou a árvore corretamente!");
+                }
+            }
+
+            // Adicione este método para verificar se a árvore está completa
+            verificarArvoreCompleta() {
+                for (const no of this.nos) {
+                    if (no.valor === null) {
+                        return false;
+                    }
+                }
+                return true;
             }
         }
 

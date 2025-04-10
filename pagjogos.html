@@ -3,126 +3,459 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutubas Games</title>
+    <title>Jogos - Tutubas Games</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/tubarao.png">
     <style>
+        :root {
+            --deep-blue: #0a3042;
+            --ocean-dark: #022f40;
+            --shark-blue: #033649;
+            --aqua-light: #00bcd4;
+            --bright-aqua: #7FDBFF;
+        }
+
         body {
-            background-color: #0a3042;
+            background-color: var(--deep-blue);
             color: #fff;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
         }
 
+        /* Header Styles */
         header {
-            background-color: #022f40;
+            background-color: var(--ocean-dark);
             padding: 20px;
             text-align: center;
+            position: relative;
+            z-index: 10;
         }
 
         header h1 {
             margin: 0;
             font-size: 3em;
-            color: #00bcd4;
+            color: var(--aqua-light);
+            text-shadow: 0 0 10px rgba(127, 219, 255, 0.5);
         }
 
+        /* Navigation Styles */
+        .wave-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4fc1e9, transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover .wave-animation {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(79, 193, 233, 0.2);
+            font-weight: bold;
+        }
+        
+        .nav-link.active:before {
+            content: "🦈";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: sharkSwim 2s infinite;
+        }
+
+        @keyframes sharkSwim {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(5px); }
+        }
+        
+        /* Gradient Styles */
+        .bg-gradient-to-r {
+            background: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to));
+        }
+        .from-blue-800 { --tw-gradient-from: #1e40af; }
+        .to-cyan-800 { --tw-gradient-to: #155e75; }
+
+        /* Game Cards Styles */
         .game-card {
-            background-color: #033649;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            padding: 15px;
+            background-color: var(--shark-blue);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            padding: 0;
             height: 100%;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            position: relative;
+            border: 2px solid rgba(0, 188, 212, 0.3);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00bcd4, #7FDBFF, #00bcd4);
+            background-size: 200% 100%;
+            animation: sharkGlow 3s linear infinite;
+        }
+
+        @keyframes sharkGlow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 200% 50%; }
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 188, 212, 0.4);
+            border-color: var(--bright-aqua);
         }
 
         .game-card img {
-            border-radius: 8px;
+            border-radius: 13px 13px 0 0;
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .game-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .game-card-content {
+            padding: 20px;
+            position: relative;
         }
 
         .game-card h3 {
-            color: #00bcd4;
-            margin-top: 15px;
+            color: var(--bright-aqua);
+            margin-top: 0;
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
         }
 
+        .game-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--bright-aqua);
+            transition: width 0.3s ease;
+        }
+
+        .game-card:hover h3::after {
+            width: 100%;
+        }
+
+        .game-card p {
+            color: #c4e8f7;
+            margin-bottom: 15px;
+        }
+
+        .play-button {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(to right, #00bcd4, #7FDBFF);
+            color: #022f40;
+            border-radius: 50px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 188, 212, 0.3);
+        }
+
+        .play-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 188, 212, 0.5);
+            color: #022f40;
+        }
+
+        /* Footer Styles */
         footer {
-            background-color: #022f40;
+            background-color: var(--ocean-dark);
             text-align: center;
-            padding: 10px 0;
+            padding: 20px 0;
             margin-top: auto;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00bcd4, transparent);
+        }
+
+        /* Ocean Bubbles Animation */
+        .bubble {
+            position: absolute;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: bubbleUp linear infinite;
+        }
+
+        @keyframes bubbleUp {
+            to {
+                transform: translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Shark Fin Animation */
+        .shark-fin {
+            position: fixed;
+            bottom: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path fill="%23022f40" d="M100,50 Q80,30 50,50 Q20,70 0,50 L0,100 L100,100 Z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.7;
+            z-index: 5;
+            animation: sharkSwimScreen 25s linear infinite;
+        }
+
+        @keyframes sharkSwimScreen {
+            0% { transform: translateX(100vw) rotate(0deg); }
+            100% { transform: translateX(-150px) rotate(0deg); }
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .section-title h2 {
+            color: var(--bright-aqua);
+            font-size: 2.5rem;
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--bright-aqua), transparent);
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Tutubas Games</h1>
+    <!-- Shark Fin Animation -->
+    <div class="shark-fin"></div>
+
+    <!-- Header -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-800 to-cyan-800 shadow-sm">
+        <div class="container">
+            <h1 class="text-center text-white mb-0">
+                <img src="images/tubarao.png" alt="Tubarão" style="height: 40px; vertical-align: middle;">
+                <span style="color: var(--bright-aqua);">Tutubas Games</span>
+            </h1>
+        </div>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-800 to-cyan-800 shadow-sm">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="paginicial.html">Início</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="paginicial.html">
+                            <i class="fas fa-home me-2"></i>Início
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="pagjogos.html">Jogos</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active px-3 py-2 rounded-pill position-relative" href="pagjogos.html">
+                            <i class="fas fa-gamepad me-2"></i>Jogos
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pagsobre.html">Sobre</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagsobre.html">
+                            <i class="fas fa-info-circle me-2"></i>Sobre
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pagrank.html">Rank</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagrank.html">
+                            <i class="fas fa-trophy me-2"></i>Rank
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <!-- Conteúdo Principal  -->
-    <div class="container my-5">
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="section-title">
+            <h2><i class="fas fa-gamepad"></i> Nossos Jogos</h2>
+        </div>
+
         <div class="row">
-            <!-- Card 1 -->
-            <div class="col-md-3 mb-4">
+            <!-- Card 1 - Fila de Tubarões -->
+            <div class="col-md-6 col-lg-3 mb-4">
                 <div class="game-card">
                     <a href="jogotubaraofila.html">
-                    <img href="jogotubaraofila.html" src="images/tutubas2.jpg" class="img-fluid" alt="Jogo 1"></a>
-                    <h3>Fila de Tubarões</h3>
-                    <p>Oredene a fila de tubarões na ordem correta.</p>
+                        <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid" alt="Fila de Tubarões">
+                    </a>
+                    <div class="game-card-content">
+                        <h3>Fila de Tubarões</h3>
+                        <p>Ordene a fila de tubarões na sequência correta neste desafio de lógica marinha.</p>
+                        <a href="jogotubaraofila.html" class="play-button">
+                            <i class="fas fa-play me-2"></i>Jogar
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!-- Card 2 -->
-            <div class="col-md-3 mb-4">
+
+            <!-- Card 2 - Árvore Binária de Bolhas -->
+            <div class="col-md-6 col-lg-3 mb-4">
                 <div class="game-card">
-                    <a href="jogobolhasarvorebin.html">
-                        <img src="images/tutubas2.jpg" class="img-fluid" alt="Jogo 2"></a>
-                    <h3>Árvore Binária de Bolhas</h3>
-                    <p>Posicione os números nas bolhas corretas.</p>
+                    <a href="jogobolhas2.html">
+                        <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid" alt="Árvore Binária de Bolhas">
+                    </a>
+                    <div class="game-card-content">
+                        <h3>Árvore Binária de Bolhas</h3>
+                        <p>Posicione os números nas bolhas corretas neste desafio de estrutura de dados.</p>
+                        <a href="jogobolhas2.html" class="play-button">
+                            <i class="fas fa-play me-2"></i>Jogar
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!-- Card 3 -->
-            <div class="col-md-3 mb-4">
+
+            <!-- Card 3 - Caça ao Tesouro Submarino -->
+            <div class="col-md-6 col-lg-3 mb-4">
                 <div class="game-card">
-                    <img src="images/tutubas2.jpg" class="img-fluid" alt="Jogo 3">
-                    <h3>Jogo 3</h3>
-                    <p>Implementação futura...</p>
+                    <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid" alt="Caça ao Tesouro Submarino">
+                    <div class="game-card-content">
+                        <h3>Caça ao Tesouro Submarino</h3>
+                        <p>Navegue pelas profundezas para encontrar tesouros escondidos.</p>
+                        <a href="#" class="play-button coming-soon">
+                            <i class="fas fa-clock me-2"></i>Em breve
+                        </a>
+                    </div>
                 </div>
             </div>
-            <!-- Card 4 -->
-            <div class="col-md-3 mb-4">
+
+            <!-- Card 4 - Tubarão Matemático -->
+            <div class="col-md-6 col-lg-3 mb-4">
                 <div class="game-card">
-                    <img src="images/tutubas2.jpg" class="img-fluid" alt="Jogo 4">
-                    <h3>Jogo 4</h3>
-                    <p>Implementação futura...</p>
+                    <img src="https://images.unsplash.com/photo-1560275619-4662e36fa65c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" class="img-fluid" alt="Tubarão Matemático">
+                    <div class="game-card-content">
+                        <h3>Tubarão Matemático</h3>
+                        <p>Resolva problemas matemáticos para alimentar o tubarão faminto.</p>
+                        <a href="#" class="play-button coming-soon">
+                            <i class="fas fa-clock me-2"></i>Em breve
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <!-- Footer -->
     <footer>
         <p>&copy; 2025 Tutubas Games. Todos os direitos reservados.</p>
     </footer>
 
-    <!-- Bootstrap JS (opcional, para funcionalidades como o menu hamburguer) -->
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        $(document).ready(function() {
+            // Create bubbles
+            function createBubbles() {
+                for (let i = 0; i < 20; i++) {
+                    const size = Math.random() * 20 + 5;
+                    const posX = Math.random() * 100;
+                    const delay = Math.random() * 15;
+                    const duration = Math.random() * 20 + 10;
+                    
+                    $('body').append(
+                        `<div class="bubble" style="
+                            left: ${posX}%;
+                            width: ${size}px;
+                            height: ${size}px;
+                            animation-delay: ${delay}s;
+                            animation-duration: ${duration}s;
+                        "></div>`
+                    );
+                }
+            }
+
+            // Shark fin animation on hover cards
+            $('.game-card').hover(
+                function() {
+                    // Shark fin appears when hovering a card
+                    $('.shark-fin').css({
+                        'bottom': '20px',
+                        'right': '20px',
+                        'opacity': '0.9',
+                        'transform': 'scale(0.8)'
+                    });
+                },
+                function() {
+                    $('.shark-fin').css({
+                        'bottom': '-50px',
+                        'right': '-50px',
+                        'opacity': '0.7',
+                        'transform': 'scale(1)'
+                    });
+                }
+            );
+
+            // Coming soon button effect
+            $('.coming-soon').click(function(e) {
+                e.preventDefault();
+                $(this).html('<i class="fas fa-exclamation-circle me-2"></i>Em breve!');
+                $(this).css({
+                    'background': 'linear-gradient(to right, #ff6b6b, #ff8e8e)',
+                    'transform': 'scale(1.1)'
+                });
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-clock me-2"></i>Em breve');
+                    $(this).css({
+                        'background': 'linear-gradient(to right, #00bcd4, #7FDBFF)',
+                        'transform': 'scale(1)'
+                    });
+                }, 1000);
+            });
+
+            // Initialize animations
+            createBubbles();
+        });
+    </script>
 </body>
 </html>

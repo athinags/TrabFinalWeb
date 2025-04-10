@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tutubas Games - Ranking</title>
+    <title>Ranking - Tutubas Games</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="images/tubarao.png">
+    
     <style>
+        /* Estilos Gerais */
         body {
             background-color: #0a3042;
             color: #fff;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
+        /* Cabeçalho */
         header {
             background-color: #022f40;
             padding: 20px;
@@ -27,6 +32,42 @@
             color: #00bcd4;
         }
 
+        /* Navegação */
+        .wave-animation {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4fc1e9, transparent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover .wave-animation {
+            width: 100%;
+        }
+        
+        .nav-link.active {
+            background: rgba(79, 193, 233, 0.2);
+            font-weight: bold;
+        }
+        
+        .nav-link.active:before {
+            content: "🦈";
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        /* Gradientes */
+        .bg-gradient-to-r {
+            background: linear-gradient(to right, var(--tw-gradient-from), var(--tw-gradient-to));
+        }
+        .from-blue-800 { --tw-gradient-from: #1e40af; }
+        .to-cyan-800 { --tw-gradient-to: #155e75; }
+
+        /* Rodapé */
         footer {
             background-color: #022f40;
             text-align: center;
@@ -34,6 +75,7 @@
             margin-top: auto;
         }
 
+        /* Seção de Ranking */
         .ranking-header {
             text-align: center;
             margin-bottom: 30px;
@@ -69,6 +111,7 @@
             background-color: #05668d;
         }
 
+        /* Classes de ranking */
         .rank-1 {
             background-color: #ffd700 !important;
             color: #000;
@@ -87,6 +130,7 @@
             font-weight: bold;
         }
 
+        /* Elementos visuais */
         .medal {
             width: 25px;
             height: 25px;
@@ -101,6 +145,7 @@
             object-fit: cover;
         }
 
+        /* Filtros */
         .filter-section {
             background-color: #033649;
             padding: 15px;
@@ -108,6 +153,7 @@
             margin-bottom: 20px;
         }
         
+        /* Mensagem sem resultados */
         .no-results {
             text-align: center;
             padding: 20px;
@@ -115,51 +161,74 @@
             color: #ff6b6b;
         }
         
+        /* Pontuação dos jogos */
         .game-score {
             font-weight: bold;
         }
     </style>
 </head>
+
 <body>
-    <header>
-        <h1>Tutubas Games</h1>
+    <!-- Cabeçalho -->
+    <header class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-800 to-cyan-800 shadow-sm">
+        <div class="container">
+            <h1 class="text-center text-white mb-0">
+                <img src="images/tubarao.png" alt="Tubarão" style="height: 40px; vertical-align: middle;">
+                <span style="color: #7FDBFF;">Tutubas Games</span>
+            </h1>
+        </div>
     </header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    
+    <!-- Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-to-r from-blue-800 to-cyan-800 shadow-sm">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="paginicial.html">Início</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="paginicial.html">
+                            <i class="fas fa-home me-2"></i>Início
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pagjogos.html">Jogos</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagjogos.html">
+                            <i class="fas fa-gamepad me-2"></i>Jogos
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="pagsobre.html">Sobre</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link px-3 py-2 rounded-pill position-relative" href="pagsobre.html">
+                            <i class="fas fa-info-circle me-2"></i>Sobre
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="pagrank.html">Rank</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link active px-3 py-2 rounded-pill position-relative" href="pagrank.html">
+                            <i class="fas fa-trophy me-2"></i>Rank
+                            <span class="wave-animation"></span>
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="container my-5">
-        <div class="ranking-header">
+    <!-- Conteúdo Principal -->
+    <main class="container my-5">
+        <section class="ranking-header">
             <h2><i class="fas fa-trophy"></i> Ranking de Jogadores</h2>
             <p class="lead">Classificação baseada na pontuação total acumulada nos jogos</p>
-        </div>
+        </section>
 
-        <div class="filter-section">
+        <section class="filter-section">
             <div class="row">
                 <div class="col-md-6 mb-3">
                     <label for="gameFilter" class="form-label">Filtrar por Jogo:</label>
                     <select class="form-select" id="gameFilter">
-                        <option value="all">Pontuação Total (ambos jogos)</option>
+                        <option value="all">Pontuação Total (todos os jogos)</option>
                         <option value="1">Tutubas Bolhas</option>
                         <option value="2">Tutubas Fila</option>
                     </select>
@@ -174,9 +243,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="ranking-table">
+        <section class="ranking-table">
             <table class="table table-hover" id="rankingTable">
                 <thead>
                     <tr>
@@ -188,292 +257,332 @@
                     </tr>
                 </thead>
                 <tbody id="rankingTableBody">
-                    <!-- Dados que eu preenchio via javascript mas vamos puxar do banco -->
+                    <!-- Dados serão preenchidos via JavaScript -->
                 </tbody>
             </table>
             <div id="noResults" class="no-results">
                 <i class="fas fa-exclamation-circle fa-2x"></i>
                 <p>Nenhum jogador encontrado com esse nome.</p>
             </div>
-        </div>
+        </section>
 
         <nav aria-label="Page navigation" class="mt-4">
             <ul class="pagination justify-content-center" id="pagination">
+                <!-- Paginação será gerada via JavaScript -->
             </ul>
         </nav>
-    </div>
+    </main>
+
+    <!-- Rodapé -->
     <footer>
         <p>&copy; 2025 Tutubas Games. Todos os direitos reservados.</p>
     </footer>
-    
-    <!-- jQuery para facilitar as requisições AJAX -->
+
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+        // Dados dos jogadores
+        const players = [
+            {
+                id: 1,
+                name: "PlayerOne",
+                avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+                game1_score: 9820,
+                game2_score: 6000,
+                last_activity: "2023-06-15"
+            },
+            {
+                id: 2,
+                name: "TutubaGameMaster",
+                avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                game1_score: 8750,
+                game2_score: 6000,
+                last_activity: "2023-06-14"
+            },
+            {
+                id: 3,
+                name: "TubaraoProGamerBR",
+                avatar: "https://randomuser.me/api/portraits/men/75.jpg",
+                game1_score: 8420,
+                game2_score: 5000,
+                last_activity: "2023-06-13"
+            },
+            {
+                id: 4,
+                name: "SharkOfGames",
+                avatar: "https://randomuser.me/api/portraits/women/68.jpg",
+                game1_score: 7980,
+                game2_score: 5000,
+                last_activity: "2023-06-12"
+            },
+            {
+                id: 5,
+                name: "NoobMaster69",
+                avatar: "https://randomuser.me/api/portraits/men/12.jpg",
+                game1_score: 7340,
+                game2_score: 4000,
+                last_activity: "2023-06-11"
+            },
+            {
+                id: 6,
+                name: "sharkGamer",
+                avatar: "https://randomuser.me/api/portraits/women/33.jpg",
+                game1_score: 6870,
+                game2_score: 4000,
+                last_activity: "2023-06-10"
+            },
+            {
+                id: 7,
+                name: "TutubasKing",
+                avatar: "https://randomuser.me/api/portraits/men/90.jpg",
+                game1_score: 5650,
+                game2_score: 4000,
+                last_activity: "2023-06-09"
+            },
+            {
+                id: 8,
+                name: "tubarinaGamerGirl",
+                avatar: "https://randomuser.me/api/portraits/women/22.jpg",
+                game1_score: 4920,
+                game2_score: 4000,
+                last_activity: "2023-06-08"
+            },
+            {
+                id: 9,
+                name: "tutuba_Player",
+                avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+                game1_score: 3830,
+                game2_score: 4000,
+                last_activity: "2023-06-07"
+            },
+            {
+                id: 10,
+                name: "Tubaraoteamo",
+                avatar: "https://randomuser.me/api/portraits/women/55.jpg",
+                game1_score: 2450,
+                game2_score: 4000,
+                last_activity: "2023-06-06"
+            }
+        ];
+
+        // Variáveis de estado
+        let currentPage = 1;
+        const itemsPerPage = 10;
+        let filteredPlayers = [];
+        
+        // Inicialização
         $(document).ready(function() {
+            initializeRanking();
+            setupEventListeners();
+        });
 
-            const players = [
-                {
-                    id: 1,
-                    name: "PlayerOne",
-                    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-                    game1_score: 9820,
-                    game2_score: 6000,
-                    last_activity: "2023-06-15"
-                },
-                {
-                    id: 2,
-                    name: "TutubaGameMaster",
-                    avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-                    game1_score: 8750,
-                    game2_score: 6000,
-                    last_activity: "2023-06-14"
-                },
-                {
-                    id: 3,
-                    name: "TubaraoProGamerBR",
-                    avatar: "https://randomuser.me/api/portraits/men/75.jpg",
-                    game1_score: 8420,
-                    game2_score: 5000,
-                    last_activity: "2023-06-13"
-                },
-                {
-                    id: 4,
-                    name: "SharkOfGames",
-                    avatar: "https://randomuser.me/api/portraits/women/68.jpg",
-                    game1_score: 7980,
-                    game2_score: 5000,
-                    last_activity: "2023-06-12"
-                },
-                {
-                    id: 5,
-                    name: "NoobMaster69",
-                    avatar: "https://randomuser.me/api/portraits/men/12.jpg",
-                    game1_score: 7340,
-                    game2_score: 4000,
-                    last_activity: "2023-06-11"
-                },
-                {
-                    id: 6,
-                    name: "sharkGamer",
-                    avatar: "https://randomuser.me/api/portraits/women/33.jpg",
-                    game1_score: 6870,
-                    game2_score: 4000,
-                    last_activity: "2023-06-10"
-                },
-                {
-                    id: 7,
-                    name: "TutubasKing",
-                    avatar: "https://randomuser.me/api/portraits/men/90.jpg",
-                    game1_score: 5650,
-                    game2_score: 4000,
-                    last_activity: "2023-06-09"
-                },
-                {
-                    id: 8,
-                    name: "tubarinaGamerGirl",
-                    avatar: "https://randomuser.me/api/portraits/women/22.jpg",
-                    game1_score: 4920,
-                    game2_score: 4000,
-                    last_activity: "2023-06-08"
-                },
-                {
-                    id: 9,
-                    name: "tutuba_Player",
-                    avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-                    game1_score: 3830,
-                    game2_score: 4000,
-                    last_activity: "2023-06-07"
-                },
-                {
-                    id: 10,
-                    name: "Tubaraoteamo",
-                    avatar: "https://randomuser.me/api/portraits/women/55.jpg",
-                    game1_score: 2450,
-                    game2_score: 4000,
-                    last_activity: "2023-06-06"
-                }
-            ];
-
-            let currentPage = 1;
-            const itemsPerPage = 10;
-            let filteredPlayers = [];
+        // Funções principais
+        function initializeRanking() {
+            // Calcula a pontuação total para cada jogador
+            players.forEach(player => {
+                player.total_score = player.game1_score + player.game2_score;
+            });
             
-            // Inicializa a página
-            loadRankingData();
-            
-            // EventOS
+            filterPlayers();
+            renderRankingTable();
+            renderPagination();
+        }
+        
+        function setupEventListeners() {
             $('#gameFilter').change(function() {
-                currentPage = 1;
+                resetToFirstPage();
                 filterPlayers();
                 renderRankingTable();
                 renderPagination();
             });
             
-            $('#searchButton').click(function() {
-                currentPage = 1;
-                filterPlayers();
-                renderRankingTable();
-                renderPagination();
-            });
+            $('#searchButton').click(searchPlayers);
             
             $('#searchPlayer').keypress(function(e) {
                 if (e.which === 13) { // Enter key
-                    currentPage = 1;
-                    filterPlayers();
-                    renderRankingTable();
-                    renderPagination();
+                    searchPlayers();
                 }
             });
-            
-
-            function loadRankingData() {
-                // Calcula a pontuação total para cada jogador
-                players.forEach(player => {
-                    player.total_score = player.game1_score + player.game2_score;
-                });
-                
+        }
+        
+        function searchPlayers() {
+                resetToFirstPage();
                 filterPlayers();
                 renderRankingTable();
                 renderPagination();
-            }
+        }
+        
+        function resetToFirstPage() {
+            currentPage = 1;
+        }
+        
+        // Função para filtrar jogadores
+        function filterPlayers() {
+            const gameFilter = $('#gameFilter').val();
+            const searchTerm = $('#searchPlayer').val().toLowerCase();
             
-            // Função para filtrar jogadores
-            function filterPlayers() {
-                const gameFilter = $('#gameFilter').val();
-                const searchTerm = $('#searchPlayer').val().toLowerCase();
+            filteredPlayers = players.filter(player => {
+                // Filtro por nome
+                if (searchTerm && !player.name.toLowerCase().includes(searchTerm)) {
+                    return false;
+                }
                 
-                filteredPlayers = players.filter(player => {
-                    // Filtro por nome
-                    if (searchTerm && !player.name.toLowerCase().includes(searchTerm)) {
-                        return false;
-                    }
-                    
-                    return true;
-                });
-                
-                // Ordenar
-                filteredPlayers.sort((a, b) => {
-                    if (gameFilter === '1') {
-                        return b.game1_score - a.game1_score;
-                    } else if (gameFilter === '2') {
-                        return b.game2_score - a.game2_score;
-                    } else {
-                        return b.total_score - a.total_score;
-                    }
-                });
-            }
+                return true;
+            });
             
-            // Função para renderizar a tabela
-            function renderRankingTable() {
-                const $tableBody = $('#rankingTableBody');
-                $tableBody.empty();
-                
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = Math.min(startIndex + itemsPerPage, filteredPlayers.length);
-                const gameFilter = $('#gameFilter').val();
-                
-                if (filteredPlayers.length === 0) {
-                    $('#noResults').show();
-                    return;
+            // Ordenar
+            sortPlayers(gameFilter);
+        }
+        
+        function sortPlayers(gameFilter) {
+            filteredPlayers.sort((a, b) => {
+                if (gameFilter === '1') {
+                    return b.game1_score - a.game1_score;
+                } else if (gameFilter === '2') {
+                    return b.game2_score - a.game2_score;
                 } else {
-                    $('#noResults').hide();
+                    return b.total_score - a.total_score;
                 }
-                
-                for (let i = startIndex; i < endIndex; i++) {
-                    const player = filteredPlayers[i];
-                    const rank = i + 1;
-                    
-                    let rowClass = '';
-                    if (rank === 1) rowClass = 'rank-1';
-                    else if (rank === 2) rowClass = 'rank-2';
-                    else if (rank === 3) rowClass = 'rank-3';
-                    
-                    // Medalhas corretas para os 3 primeiros
-                    const medalIcon = rank <= 3 ? 
-                        `<img src="https://cdn-icons-png.flaticon.com/512/2583/2583${rank === 1 ? '344' : rank === 2 ? '319' : '334'}.png" 
-     alt="${rank === 1 ? 'Ouro' : rank === 2 ? 'Bronze' : 'Prata'}" class="medal">` : '';
-                    
-                    const row = `
-                        <tr class="${rowClass}">
-                            <th scope="row">${medalIcon}${rank}</th>
-                            <td>
-                                <img src="${player.avatar}" alt="Avatar" class="avatar">
-                                ${player.name}
-                            </td>
-                            <td>${player.total_score.toLocaleString()}</td>
-                            <td class="game-score">${player.game1_score.toLocaleString()}</td>
-                            <td class="game-score">${player.game2_score.toLocaleString()}</td>
-                        </tr>
-                    `;
-                    
-                    $tableBody.append(row);
-                }
+            });
+        }
+        
+        // Função para renderizar a tabela
+        function renderRankingTable() {
+            const $tableBody = $('#rankingTableBody');
+            $tableBody.empty();
+            
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredPlayers.length);
+            const gameFilter = $('#gameFilter').val();
+            
+            if (filteredPlayers.length === 0) {
+                $('#noResults').show();
+                return;
+            } else {
+                $('#noResults').hide();
             }
             
-            function renderPagination() {
-                const $pagination = $('#pagination');
-                $pagination.empty();
+            for (let i = startIndex; i < endIndex; i++) {
+                const player = filteredPlayers[i];
+                const rank = i + 1;
                 
-                const totalPages = Math.ceil(filteredPlayers.length / itemsPerPage);
+                const rowClass = getRankClass(rank);
+                const medalIcon = getMedalIcon(rank);
                 
-                if (totalPages <= 1) return;
-
-                const prevDisabled = currentPage === 1 ? 'disabled' : '';
-                $pagination.append(`
-                    <li class="page-item ${prevDisabled}">
-                        <a class="page-link" href="#" aria-label="Anterior" id="prevPage">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                `);
-                
-                for (let i = 1; i <= totalPages; i++) {
-                    const active = i === currentPage ? 'active' : '';
-                    $pagination.append(`
-                        <li class="page-item ${active}">
-                            <a class="page-link" href="#" data-page="${i}">${i}</a>
-                        </li>
-                    `);
-                }
-
-                const nextDisabled = currentPage === totalPages ? 'disabled' : '';
-                $pagination.append(`
-                    <li class="page-item ${nextDisabled}">
-                        <a class="page-link" href="#" aria-label="Próximo" id="nextPage">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                `);
-                
-
-                $('[data-page]').click(function(e) {
-                    e.preventDefault();
-                    currentPage = parseInt($(this).data('page'));
-                    renderRankingTable();
-                    window.scrollTo(0, 0);
-                });
-                
-                $('#prevPage').click(function(e) {
-                    e.preventDefault();
-                    if (currentPage > 1) {
-                        currentPage--;
-                        renderRankingTable();
-                        window.scrollTo(0, 0);
-                    }
-                });
-                
-                $('#nextPage').click(function(e) {
-                    e.preventDefault();
-                    if (currentPage < totalPages) {
-                        currentPage++;
-                        renderRankingTable();
-                        window.scrollTo(0, 0);
-                    }
-                });
+                const row = createPlayerRow(player, rank, rowClass, medalIcon);
+                $tableBody.append(row);
             }
-        });
+        }
+        
+        function getRankClass(rank) {
+            if (rank === 1) return 'rank-1';
+            if (rank === 2) return 'rank-2';
+            if (rank === 3) return 'rank-3';
+            return '';
+        }
+        
+        function getMedalIcon(rank) {
+            if (rank > 3) return '';
+            
+            const medalTypes = {
+                1: { src: '344', alt: 'Ouro' },
+                2: { src: '319', alt: 'Prata' },
+                3: { src: '334', alt: 'Bronze' }
+            };
+            
+            return `<img src="https://cdn-icons-png.flaticon.com/512/2583/2583${medalTypes[rank].src}.png" 
+                     alt="${medalTypes[rank].alt}" class="medal">`;
+        }
+        
+        function createPlayerRow(player, rank, rowClass, medalIcon) {
+            return `
+                <tr class="${rowClass}">
+                    <th scope="row">${medalIcon}${rank}</th>
+                    <td>
+                        <img src="${player.avatar}" alt="Avatar" class="avatar">
+                        ${player.name}
+                    </td>
+                    <td>${player.total_score.toLocaleString()}</td>
+                    <td class="game-score">${player.game1_score.toLocaleString()}</td>
+                    <td class="game-score">${player.game2_score.toLocaleString()}</td>
+                </tr>
+            `;
+        }
+        
+        function renderPagination() {
+            const $pagination = $('#pagination');
+            $pagination.empty();
+            
+            const totalPages = Math.ceil(filteredPlayers.length / itemsPerPage);
+            
+            if (totalPages <= 1) return;
+
+            // Botão Anterior
+            const prevDisabled = currentPage === 1 ? 'disabled' : '';
+            $pagination.append(`
+                <li class="page-item ${prevDisabled}">
+                    <a class="page-link" href="#" aria-label="Anterior" id="prevPage">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            `);
+            
+            // Números das páginas
+            for (let i = 1; i <= totalPages; i++) {
+                const active = i === currentPage ? 'active' : '';
+                $pagination.append(`
+                    <li class="page-item ${active}">
+                        <a class="page-link" href="#" data-page="${i}">${i}</a>
+                    </li>
+                `);
+            }
+
+            // Botão Próximo
+            const nextDisabled = currentPage === totalPages ? 'disabled' : '';
+            $pagination.append(`
+                <li class="page-item ${nextDisabled}">
+                    <a class="page-link" href="#" aria-label="Próximo" id="nextPage">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            `);
+            
+            // Event listeners para paginação
+            setupPaginationEvents();
+        }
+        
+        function setupPaginationEvents() {
+            $('[data-page]').click(function(e) {
+                e.preventDefault();
+                currentPage = parseInt($(this).data('page'));
+                renderRankingTable();
+                scrollToTop();
+            });
+            
+            $('#prevPage').click(function(e) {
+                e.preventDefault();
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderRankingTable();
+                    scrollToTop();
+                }
+            });
+            
+            $('#nextPage').click(function(e) {
+                e.preventDefault();
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    renderRankingTable();
+                    scrollToTop();
+                }
+            });
+        }
+        
+        function scrollToTop() {
+            window.scrollTo(0, 0);
+        }
     </script>
 </body>
 </html>
