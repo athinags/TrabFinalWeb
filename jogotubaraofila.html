@@ -1,136 +1,281 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fila de Tubarões</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <title>Fila de Tubarões</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: linear-gradient(#0077b6, #00b4d8);
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
 
-        #fila {
-            gap: 10px;
-        }
+    #fila {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
 
-        .tubarao {
-            width: 100px;
-            height: 100px;
-            background-color: #007bff;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: 10px;
-            user-select: none;
-        }
+    .tubarao {
+      width: 120px;
+      height: 120px;
+      border: 4px solid #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.3s, transform 0.2s;
+      cursor: grab;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+    
+    .tubarao:hover {
+      transform: scale(1.05);
+    }
 
-        .tubarao.errado {
-            background-color: #dc3545;
-        }
+    /* Cores de fundo para diferenciar os tubarões */
+    .tubarao[data-id="0"] { background-color: #023e8a; }
+    .tubarao[data-id="1"] { background-color: #0077b6; }
+    .tubarao[data-id="2"] { background-color: #0096c7; }
+    .tubarao[data-id="3"] { background-color: #00b4d8; }
+    .tubarao[data-id="4"] { background-color: #48cae4; }
+    .tubarao[data-id="5"] { background-color: #90e0ef; }
+    .tubarao[data-id="6"] { background-color: #ade8f4; color: #023e8a; }
+    .tubarao[data-id="7"] { background-color: #caf0f8; color: #023e8a; }
 
-        .tubarao.certo {
-            background-color: #28a745;
-        }
+    .certo {
+      border-color: limegreen !important;
+    }
 
-        #jogar-novamente {
-            display: none; /* Escondido inicialmente */
-            margin-top: 10px;
-        }
-    </style>
+    .errado {
+      border-color: red !important;
+    }
+
+    #pontuacao, #fase {
+      font-size: 1.2em;
+      margin: 10px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.1s;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.05);
+    }
+
+    #verificar {
+      background: #023e8a;
+      color: white;
+    }
+
+    #vida-container {
+      width: 300px;
+      height: 20px;
+      background: #ccc;
+      border-radius: 10px;
+      margin: 10px auto;
+      overflow: hidden;
+    }
+
+    #vida {
+      height: 100%;
+      width: 100%;
+      background: limegreen;
+      transition: width 0.3s, background-color 0.3s;
+    }
+    
+    .instrucoes {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: rgba(0,0,0,0.2);
+      padding: 15px;
+      border-radius: 10px;
+    }
+    
+    #tubarao-mordida {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      visibility: hidden;
+    }
+    
+    #tubarao-mordida img {
+      width: 300px;
+      height: 300px;
+    }
+  </style>
 </head>
 <body>
-    <div class="container text-center mt-5">
-        <h1>Fila de Tubarões</h1>
-        <p>Organize os tubarões na ordem correta!</p>
-        <div id="fila" class="d-flex justify-content-center mb-3">
-            <!-- Tubarões serão inseridos aqui via JavaScript -->
-        </div>
-        <button id="verificar" class="btn btn-primary">Verificar</button>
-        <button id="jogar-novamente" class="btn btn-secondary">Jogar Novamente</button>
-        <p id="mensagem" class="mt-3"></p>
-    </div>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const fila = document.getElementById('fila');
-            const verificarBtn = document.getElementById('verificar');
-            const jogarNovamenteBtn = document.getElementById('jogar-novamente');
-            const mensagem = document.getElementById('mensagem');
-            let tubaroes = ['Tubarão 1', 'Tubarão 2', 'Tubarão 3', 'Tubarão 4'];
-            let ordemCorreta;
+  <h1>🦈 Fila de Tubarões 🦈</h1>
+  
+  <div class="instrucoes">
+    <p>Organize os tubarões na ordem correta! Arraste os tubarões para mudar suas posições e clique em "Verificar" quando achar que está na ordem certa.</p>
+  </div>
 
-            // Função para iniciar o jogo
-            function iniciarJogo() {
-                ordemCorreta = [...tubaroes].sort(() => Math.random() - 0.5); // Embaralha a ordem correta
-                fila.innerHTML = ''; // Limpa a fila
-                mensagem.textContent = ''; // Limpa a mensagem
-                jogarNovamenteBtn.style.display = 'none'; // Esconde o botão "Jogar Novamente"
+  <div id="fase">Fase: 1</div>
+  <div id="pontuacao">Pontos: 0</div>
 
-                // Cria os tubarões na fila
-                tubaroes.forEach(tubarao => {
-                    const div = document.createElement('div');
-                    div.className = 'tubarao';
-                    div.textContent = tubarao;
-                    div.draggable = true;
-                    div.addEventListener('dragstart', dragStart);
-                    div.addEventListener('dragover', dragOver);
-                    div.addEventListener('drop', drop);
-                    fila.appendChild(div);
-                });
-            }
+  <div id="vida-container">
+    <div id="vida"></div>
+  </div>
 
-            let arrastando = null;
+  <div id="fila"></div>
+  <button class="btn" id="verificar">Verificar</button>
+  
+  <div id="tubarao-mordida">
+    <img src="https://www.imagensanimadas.com/data/media/516/tubarao-imagem-animada-0047.gif" alt="Tubarão atacando">
+  </div>
 
-            function dragStart(e) {
-                arrastando = e.target;
-                e.dataTransfer.setData('text/plain', e.target.textContent);
-            }
+  <script>
+    let fase = 1;
+    let pontos = 0;
+    let vida = 100;
+    const maxVida = 100;
 
-            function dragOver(e) {
-                e.preventDefault();
-            }
+    const fila = document.getElementById("fila");
+    const verificarBtn = document.getElementById("verificar");
+    const pontuacao = document.getElementById("pontuacao");
+    const faseAtual = document.getElementById("fase");
+    const vidaBar = document.getElementById("vida");
+    const tubaraoMordida = document.getElementById("tubarao-mordida");
 
-            function drop(e) {
-                e.preventDefault();
-                if (e.target.className.includes('tubarao')) {
-                    const temp = arrastando.textContent;
-                    arrastando.textContent = e.target.textContent;
-                    e.target.textContent = temp;
-                }
-            }
+    let ordemCorreta = [];
+    let dragging = null;
 
-            verificarBtn.addEventListener('click', () => {
-                const tubaroesNaFila = Array.from(fila.children).map(tubarao => tubarao.textContent);
-                let acertos = 0;
+    function atualizarHUD() {
+      pontuacao.textContent = `Pontos: ${pontos}`;
+      faseAtual.textContent = `Fase: ${fase}`;
+      vidaBar.style.width = `${vida}%`;
 
-                tubaroesNaFila.forEach((tubarao, index) => {
-                    if (tubarao === ordemCorreta[index]) {
-                        fila.children[index].classList.add('certo');
-                        fila.children[index].classList.remove('errado');
-                        acertos++;
-                    } else {
-                        fila.children[index].classList.add('errado');
-                        fila.children[index].classList.remove('certo');
-                    }
-                });
+      if (vida > 60) {
+        vidaBar.style.backgroundColor = 'limegreen';
+      } else if (vida > 30) {
+        vidaBar.style.backgroundColor = 'orange';
+      } else {
+        vidaBar.style.backgroundColor = 'red';
+      }
+    }
 
-                if (acertos === tubaroes.length) {
-                    mensagem.textContent = "Parabéns! Você organizou os tubarões corretamente!";
-                    jogarNovamenteBtn.style.display = 'block'; // Mostra o botão "Jogar Novamente"
-                } else {
-                    mensagem.textContent = "Ops! Um tubarão mordeu você! Tente novamente.";
-                    jogarNovamenteBtn.style.display = 'none'; // Garante que o botão fique escondido
-                }
-            });
+    function iniciarFase() {
+      const qtd = Math.min(fase + 2, 8);
+      ordemCorreta = Array.from({length: qtd}, (_, idx) => ({ id: idx }));
+      const embaralhados = [...ordemCorreta].sort(() => Math.random() - 0.5);
 
-            jogarNovamenteBtn.addEventListener('click', iniciarJogo);
+      fila.innerHTML = '';
+      embaralhados.forEach(({ id }) => {
+        const div = document.createElement('div');
+        div.className = 'tubarao';
+        div.draggable = true;
+        div.dataset.id = id;
+        div.textContent = "🦈";
 
-            // Inicia o jogo pela primeira vez
-            iniciarJogo();
+        div.addEventListener('dragstart', (e) => {
+          dragging = div;
+          div.style.opacity = '0.6';
         });
-    </script>
+        
+        div.addEventListener('dragend', (e) => {
+          div.style.opacity = '1';
+        });
+
+        div.addEventListener('dragover', (e) => {
+          e.preventDefault();
+        });
+
+        div.addEventListener('drop', (e) => {
+          e.preventDefault();
+          if (dragging !== div) {
+            const children = [...fila.children];
+            const draggedIndex = children.indexOf(dragging);
+            const droppedIndex = children.indexOf(div);
+
+            if (draggedIndex < droppedIndex) {
+              div.after(dragging);
+            } else {
+              div.before(dragging);
+            }
+          }
+        });
+
+        fila.appendChild(div);
+      });
+
+      atualizarHUD();
+    }
+    
+    function mostrarMordida() {
+      tubaraoMordida.style.visibility = 'visible';
+      setTimeout(() => {
+        tubaraoMordida.style.visibility = 'hidden';
+      }, 1000);
+    }
+
+    verificarBtn.addEventListener('click', () => {
+      const filhos = [...fila.children];
+      let acertos = 0;
+
+      filhos.forEach((div, index) => {
+        const id = parseInt(div.dataset.id);
+        if (id === ordemCorreta[index].id) {
+          div.classList.add('certo');
+          div.classList.remove('errado');
+          acertos++;
+        } else {
+          div.classList.add('errado');
+          div.classList.remove('certo');
+        }
+      });
+
+      if (acertos === filhos.length) {
+        pontos += filhos.length * 10;
+        fase++;
+        setTimeout(() => {
+          filhos.forEach(div => {
+            div.classList.remove('certo');
+          });
+          iniciarFase();
+        }, 1000);
+      } else {
+        vida -= 20;
+        mostrarMordida(); // Mostra o GIF do tubarão mordendo
+        
+        if (vida <= 0) {
+          setTimeout(() => {
+            alert("💀 Você perdeu! Pontuação final: " + pontos);
+            vida = maxVida;
+            pontos = 0;
+            fase = 1;
+            iniciarFase();
+          }, 1000);
+        }
+        atualizarHUD();
+      }
+    });
+
+    iniciarFase();
+  </script>
+
 </body>
 </html>
